@@ -1,0 +1,252 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 10px;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #1a1a1aff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  max-width: 1280px;
+}
+
+.main-section {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.main-section > h2:last-child {
+  margin-top: 4rem;
+}
+
+.main-section > h2:first-child {
+  margin-top: 4rem;
+}
+
+.main-section-doc > h2:not(:first-child) {
+  margin-top: 4rem;
+}
+
+hr {
+  border: 1px solid rgba(128, 128, 128, 0.209);
+  border-top: none;
+  max-width: 1280px;
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: normal;
+  white-space: pre;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+span {
+  font-size: 1.4rem;
+  font-family: "Courier New", Courier, monospace;
+  background-color: rgba(128, 128, 128, 0.205);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  white-space: pre;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 24px;
+}
+
+.footer > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer > a > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.playground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+main {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-inline: 2rem;
+  max-width: 1280px;
+}
+
+main > hr:first-child {
+  margin-bottom: 4rem;
+}
+
+label,
+a > p,
+main > p {
+  font-size: 1.4rem;
+}
+
+#resource-link > p {
+  height: 24px;
+  font-size: 1.4rem;
+}
+
+form {
+  display: grid;
+  grid-template-rows: 42px 12px 42px;
+  grid-template-columns: 6px 348px 6px;
+  width: 360px;
+}
+
+#input-label {
+  display: flex;
+  flex-basis: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  place-self: center;
+  z-index: 1;
+}
+
+#input-label > label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.upload-btn {
+  grid-row-start: 3;
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.download-btn {
+  background: transparent;
+  width: 360px;
+  height: 42px;
+  padding-inline: 140px;
+  padding-block: 10px;
+  text-decoration: none;
+}
+
+.input-container {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  height: 42px;
+  width: 100%;
+  background: rgb(12, 12, 12, 0.2);
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  border-radius: 8px;
+  outline: 3px solid transparent;
+  padding-inline: 6px;
+  cursor: pointer;
+}
+
+.input-container:hover {
+  background: rgb(12, 12, 12, 0.5);
+}
+
+input[type="file"] {
+  display: none;
+  pointer-events: none;
+}
+
+.file-selected {
+  width: 100%;
+  white-space: pre;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 4px;
+  background: rgb(12, 12, 12, 0.5);
+  padding-inline-start: 8px;
+  padding-inline-end: 7px;
+  padding-block: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-selected > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: transparent;
+  font-weight: normal;
+  color: rgba(128, 128, 128, 0.8);
+}
+
+button {
+  height: 38px;
+  background-color: rgb(12, 12, 12, 0.5);
+  border: 1px solid transparent;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1.4rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all;
+  transition-timing-function: ease-in-out;
+  transition-duration: 250ms;
+}
+
+button:hover {
+  background-color: rgb(12, 12, 12, 0.8);
+  border-color: rgba(128, 128, 128, 0.2);
+}
+
+@media screen and (max-width: 360px) {
+  hr,
+  main {
+    width: 320px;
+  }
+}
