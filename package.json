@@ -1,6 +1,6 @@
 {
   "name": "@zhid0399123/upchunks",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Robust file uploading mechanism that breaks large files into smaller chunks for efficient transfer and storage.",
   "main": "src/bin/index.js",
   "scripts": {
