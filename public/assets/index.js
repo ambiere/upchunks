@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         formData.append("chunks", chunks)
         formData.append("originalname", file.name)
         formData.append("fileSize", fileSize)
-        fetch("http://0.0.0.0:3000/v0/api/upchunks/file", {
+        fetch("https://upchunks.fly.dev/v0/api/upchunks/file", {
           method: "POST",
           body: formData,
         })
