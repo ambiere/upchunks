@@ -10,7 +10,7 @@ const router = Router({ strict: true })
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
-router.post("/file", upload.single("upfile"), async function (req, res, next) {
+router.post("/file", upload.single("file"), async function (req, res, next) {
   try {
     if (!req.file) {
       const error = new Error("No file uploaded :)")
@@ -46,13 +46,13 @@ router.post("/file", upload.single("upfile"), async function (req, res, next) {
     }
     await fs.promises.writeFile(filePath, buffer)
     const filedata = {
-      name: filename,
-      type: mimetype,
-      size: req.file.size,
-      // filePath: filePath,
+      originalname: filename,
+      mimetype: mimetype,
+      fileSize: req.file.size,
+      filePath: filePath,
     }
-    // const insertedId = await Collection.insertDocument("filedata", filedata);
-    res.json({ ...filedata })
+    const insertedId = await Collection.insertDocument("filedata", filedata)
+    res.json({ fileId: insertedId, ...filedata })
   } catch (error) {
     next(error)
   }
