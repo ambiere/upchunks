@@ -39,7 +39,7 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
           size: fileSize,
           filePath: filePath,
         }
-        const insertedId = await Collection.insertDocument("filedata", filedata)
+        const insertedId = await Collection.insertDocument("upchunks", filedata)
         return res.json({ fileId: insertedId, ...filedata })
       }
       return res.json({ message: `chunk ${chunk}/${chunks} saved`, status: "OK" })
@@ -51,7 +51,7 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
       fileSize: req.file.size,
       filePath: filePath,
     }
-    const insertedId = await Collection.insertDocument("filedata", filedata)
+    const insertedId = await Collection.insertDocument("upchunks", filedata)
     res.json({ fileId: insertedId, ...filedata })
   } catch (error) {
     next(error)
@@ -62,7 +62,7 @@ router.get("/file/download/:fileId", async function (req, res, next) {
   try {
     const { _id, err } = MongoDbClient.generateObjectId(req.params.fileId)
     if (err) return next(err)
-    const filedata = await Collection.getDocument("filedata", { _id })
+    const filedata = await Collection.getDocument("upchunks", { _id })
     if (!filedata) {
       const error = new Error("File not found :)")
       error.code = "ENOENT"
