@@ -5,6 +5,7 @@ const fs = require("fs")
 const Collection = require("../services/collection")
 const MongoDbClient = require("../services/mongodb")
 const handleFileChunks = require("../util/handleFileChunks")
+const mkdir = require("../util/mkdir")
 
 const router = Router({ strict: true })
 const storage = multer.memoryStorage()
@@ -17,21 +18,20 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
       error.code = "ENOFUP"
       throw error
     }
+
     const buffer = req.file.buffer
-    const filename = req.file.originalname
     const mimetype = req.file.mimetype
     const chunks = Number(req.body.chunks)
     const chunk = Number(req.body.chunk)
+    const filename = req.body.originalname
     const filesDir = path.join(__dirname, "../..", "files")
     const filePath = filesDir + `/${filename}`
+    const fileSize = Number(req.body.fileSize)
 
-    !fs.existsSync(filesDir) && fs.mkdirSync(filesDir)
     if (chunks && chunk) {
-      const filename = req.body.originalname
-      const filePath = filesDir + `/${filename}`
-      const fileSize = Number(req.body.fileSize)
+      const { error: err } = await mkdir(filesDir)
+      if (err) return next(err)
       const { mergedFileSize, error } = await handleFileChunks({ filename, buffer, chunk, chunks, filesDir })
-      req.log.error({ chunk, chunks }, "chunks")
       if (error) return next(error)
       if (mergedFileSize === fileSize) {
         const filedata = {
@@ -45,15 +45,9 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
       }
       return res.json({ message: `chunk ${chunk}/${chunks} saved`, status: "OK" })
     }
-    await fs.promises.writeFile(filePath, buffer)
-    const filedata = {
-      originalname: filename,
-      mimetype: mimetype,
-      fileSize: req.file.size,
-      filePath: filePath,
-    }
-    const insertedId = await Collection.insertDocument("upchunks", filedata)
-    res.json({ fileId: insertedId, ...filedata })
+    const error = new Error("Bad request: chunk  and chunks field required")
+    error.code = "EINVFC"
+    throw error
   } catch (error) {
     next(error)
   }
