@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for upchunks on 2023-12-30T21:24:57+03:00
+# fly.toml app configuration file generated for upchunks on 2024-01-03T17:22:26+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -8,6 +8,7 @@ primary_region = "jnb"
 
 [build]
   dockerfile = "Dockerfile"
+  ignorefile = ".dockerignore"
   [build.args]
     NODE_ENV = "production"
 
