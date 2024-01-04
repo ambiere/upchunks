@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for upchunks on 2024-01-03T17:22:26+03:00
+# fly.toml app configuration file generated for upchunks on 2024-01-04T12:42:14+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -11,6 +11,10 @@ primary_region = "jnb"
   ignorefile = ".dockerignore"
   [build.args]
     NODE_ENV = "production"
+
+[mounts]
+  source="data"
+  destination="/app/src/"    
 
 [http_service]
   internal_port = 3000
