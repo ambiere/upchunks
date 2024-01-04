@@ -24,7 +24,7 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
     const chunks = Number(req.body.chunks)
     const chunk = Number(req.body.chunk)
     const filename = req.body.originalname
-    const filesDir = path.join(__dirname, "../..", "files")
+    const filesDir = path.join(__dirname, "../..", "data/files")
     const filePath = filesDir + `/${filename}`
     const fileSize = Number(req.body.fileSize)
 
