@@ -5,7 +5,7 @@ const mkdir = require("./mkdir")
 
 async function handleFileChunks({ filename, buffer, chunk, chunks, filesDir }) {
   const filePath = filesDir + `/${filename}`
-  const chunksDir = path.join(__dirname, "../..", "chunks")
+  const chunksDir = path.join(__dirname, "../..", "data/chunks")
 
   try {
     const { error: err } = await mkdir(chunksDir)
