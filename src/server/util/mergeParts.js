@@ -8,7 +8,7 @@ async function mergeParts({ filename, filePath, chunksDir, chunks }) {
       const chunkPath = `${chunksDir}/${filename}.part_${iteration}`
       const buffer = await fs.promises.readFile(chunkPath)
       stream.write(buffer)
-      // fs.unlinkSync(chunkPath);
+      fs.unlinkSync(chunkPath)
       iteration++
     }
     stream.end()
