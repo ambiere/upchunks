@@ -14,7 +14,7 @@ primary_region = "jnb"
 
 [mounts]
   source="data"
-  destination="/src"    
+  destination="/data"    
 
 [http_service]
   internal_port = 3000
