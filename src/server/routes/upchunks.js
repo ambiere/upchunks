@@ -24,7 +24,7 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
     const chunks = Number(req.body.chunks)
     const chunk = Number(req.body.chunk)
     const filename = req.body.originalname
-    const filesDir = path.join(__dirname, "../..", "data/files")
+    const filesDir = path.join(__dirname, "../../..", "data/files")
     const filePath = filesDir + `/${filename}`
     const fileSize = Number(req.body.fileSize)
 
@@ -32,6 +32,7 @@ router.post("/file", upload.single("file"), async function (req, res, next) {
       const { error: err } = await mkdir(filesDir)
       if (err) return next(err)
       const { mergedFileSize, error } = await handleFileChunks({ filename, buffer, chunk, chunks, filesDir })
+
       if (error) return next(error)
       if (mergedFileSize === fileSize) {
         const filedata = {
