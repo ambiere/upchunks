@@ -18,7 +18,7 @@ t.test("should handle file chunks", async (t) => {
       filesDir,
     })
 
-    if (result.error === undefined) {
+    if (result && result.error === undefined) {
       t.equal(result.mergedFileSize, 3)
     }
     iteration++
