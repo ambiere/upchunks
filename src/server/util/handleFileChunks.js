@@ -5,22 +5,33 @@ const mkdir = require("./mkdir")
 
 async function handleFileChunks({ filename, buffer, chunk, chunks, filesDir }) {
   const filePath = filesDir + `/${filename}`
-  const chunksDir = path.join(__dirname, "../../..", "data/chunks")
+  const chunksDir = path.join(__dirname, "../../..", "storage/chunks")
 
   try {
     const { error: err } = await mkdir(chunksDir)
-    if (err) return { error: err }
+    if (err) return { error: err, mergedFileSize: 0 }
     await fs.promises.writeFile(`${chunksDir}/${filename}.part_${chunk}`, buffer)
     if (chunk === chunks) {
-      const { error } = await mergeParts({ filename, filePath, chunksDir, chunks })
-      if (error) throw error
-      return { mergedFileSize: fs.statSync(filePath).size }
+      const { error: MergeErr, status } = await mergeParts({ filename, filePath, chunksDir, chunks })
+      if (MergeErr) throw MergeErr
+      if (status === "done") {
+        fs.access(filePath, fs.constants.F_OK, (err) => {
+          if (err) {
+            console.log("access error", err)
+            return { error: err, mergedFileSize: 0 }
+          }
+          console.log("checking stats")
+          console.log(fs.statSync(filePath))
+          return { mergedFileSize: fs.statSync(filePath).size }
+        })
+        console.log("not called")
+      }
     }
     return { mergedFileSize: 0, error: null }
   } catch (error) {
     const err = new Error(error)
     err.code = "EMEUCF"
-    return { error: err }
+    return { error: err, mergedFileSize: 0 }
   }
 }
 
