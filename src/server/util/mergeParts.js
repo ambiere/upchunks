@@ -14,6 +14,7 @@ async function mergeParts({ filename, filePath, chunksDir, chunks }) {
     stream.end()
     return { status: "done" }
   } catch (error) {
+    error.code = "EMEUCF"
     console.error(error)
     return { status: "error", error }
   }
