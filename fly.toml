@@ -13,8 +13,8 @@ primary_region = "jnb"
     NODE_ENV = "production"
 
 [mounts]
-  source="data"
-  destination="/data"    
+  source="filesystem_storage"
+  destination="/app/storage"    
 
 [http_service]
   internal_port = 3000
