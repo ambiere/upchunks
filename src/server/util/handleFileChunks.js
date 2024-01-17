@@ -14,11 +14,17 @@ async function handleFileChunks({ filename, buffer, chunk, chunks, filesDir }) {
     if (chunk === chunks) {
       const { error: MergeErr, status } = await mergeParts({ filename, filePath, chunksDir, chunks })
       if (MergeErr) throw MergeErr
-      else if (status === "done") {
-        fs.access(filePath, (err) => {
-          if (err) throw err
+      if (status === "done") {
+        fs.access(filePath, fs.constants.F_OK, (err) => {
+          if (err) {
+            console.log("access error", err)
+            return { error: err, mergedFileSize: 0 }
+          }
+          console.log("checking stats")
+          console.log(fs.statSync(filePath))
+          return { mergedFileSize: fs.statSync(filePath).size }
         })
-        return { mergedFileSize: fs.statSync(filePath).size }
+        console.log("not called")
       }
     }
     return { mergedFileSize: 0, error: null }

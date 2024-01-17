@@ -3,13 +3,11 @@ module.exports = function errorHandler(error, req, res, next) {
   const isENOENT = error.code === "ENOENT"
   const isENOFUP = error.code === "ENOFUP"
   const isEMECFA = error.code === "EMEUCF"
-  const isMongoENOTFOUND = error.code === "ENOTFOUND"
 
   isENOENT && ErrorUtil.handleENOENT(error, res)
   isENOFUP && ErrorUtil.handleENOFUP(error, res)
-  isEMECFA && ErrorUtil.handleInternalError(error, res, req)
-  isMongoENOTFOUND && ErrorUtil.handleInternalError(error, res, req)
-  error.statusCode >= 500 && ErrorUtil.handleInternalError(error, res, req)
+  isEMECFA && ErrorUtil.handleEMEUCF(error, res, req)
+  console.log(error.code, error.message, error.statusCode, error instanceof MongoServerError)
   next(error)
 }
 
@@ -22,7 +20,7 @@ const ErrorUtil = {
     res.status(400).json({ error: error.message, code: error.code, statusCode: 400 })
   },
 
-  handleInternalError: (error, res, req) => {
+  handleEMEUCF: (error, res, req) => {
     req.log.info(error)
     res.status(500).json({
       info: `Internal server error. Contact the support team. Id ${req.id}`,
